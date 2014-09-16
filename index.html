@@ -63,7 +63,7 @@
 		<p><strong>How this tutorial works:</strong> It's structured around examples that progressively build upon one another, starting from scratch and ending with slightly advanced techniques. It assumes a basic knowledge of HTML and JavaScript, or at the very least assumes the will to tinker with the code to better understand what it does—and how to use it for your own work. It won't explain every little object or array, but will contain plenty of links. For complete and thorough documentation, see the <a href="http://leafletjs.com/reference.html" target="_blank">Leaflet site</a>.</p>
 	<h2 id="section2">This is a simple Leaflet map. A few lines of code.</h2>
 	<div class="map" id="map0"></div>
-
+	<a class="standalone" href="http://bl.ocks.org/awoodruff/e9739a6719e0604eef58" target="_blank">View this example on its own</a>
 	<h2 id="section2">Let's make a map!</h2>
 	
 	<p>The simple map above requires only a few things:
@@ -123,6 +123,7 @@
 	</p>
 	<h2 id="section3">More layers</h2>
 	<div class="map" id="map1"></div>
+	<a class="standalone" href="http://bl.ocks.org/awoodruff/f89989cd2499cf4a900c" target="_blank">View this example on its own</a>
 	<p>Try other base layers, such as Stamen or OpenStreetMap. Sometimes maps use multiple tile layers at once. The map above adds MAPC's bike lane layer, which looks like vector data but is actually made up of PNG images with transparency.</p>
 	<p>Just pile on additional layers the same way as the first one. As we'll see later, other types of layers are added in a very similar manner. We'll also talk later about how to toggle different layers on and off.</p>
 	<pre>
@@ -155,7 +156,7 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
 	<p>This is Maptime Boston, so obviously we're going to make a #ratmap for this example. Below is a map of [rodent incidents? what technically is this?] in Boston.</p>
 
 	<div id="map2" class="map"></div>
-
+	<a class="standalone" href="http://bl.ocks.org/awoodruff/1dc36a658a2e24e01b12" target="_blank">View this example on its own</a>
 	<p>Rodents everywhere! The data come from the City of Boston's <a href="https://data.cityofboston.gov/City-Services/Rodent-Activity-open-cases-9-4-13/ynt4-n6g9" target="_blank">open data site</a>. We have converted the original CSV to GeoJSON ahead of time using QGIS. GeoJSON is the de facto standard data type for web maps, and Leaflet has built-in methods to make it easy to map GeoJSON data. For more about GeoJSON, see [some good reference].</p>
 
 	<pre><code>
@@ -211,7 +212,7 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
 <p>Our rodents showed up as default blue markers in the map above. But, although the markers aren't ugly, defaults are <a href="http://uxblog.idvsolutions.com/2013/10/20-unrequested-map-tips-part-1.html" target="_blank">rarely a good idea</a>. Besides, this is a #ratmap, so let's see some rats!</p>
 
 <div id="map3" class="map"></div>
-
+<a class="standalone" href="http://bl.ocks.org/awoodruff/803c310c871b3b5cc199" target="_blank">View this example on its own</a>
 <p>Eek! <a href="http://i.imgur.com/CqPln1t.gif" target="_blank">Everybody tuck your pants into your socks.</a></p>
 
 <pre><code>
@@ -246,6 +247,7 @@ $.getJSON("rodents.geojson",function(data){
 <h2 id="section6">Interaction</h2>
 <p>The true power of web maps is in interaction, and not just panning and zooming. Let's make the #ratmap a bit more useful by adding popups showing the address and date of each rodent report. Click on the rat icons below to see that information.</p>
 <div id="map4" class="map"></div>
+<a class="standalone" href="http://bl.ocks.org/awoodruff/2488ee1fdf0cf063904e" target="_blank">View this example on its own</a>
 <pre><code>
 pointToLayer: function(feature,latlng){
   <span>var marker = L.marker(latlng,{icon: ratIcon});
@@ -258,7 +260,7 @@ pointToLayer: function(feature,latlng){
 <h2 id="section7">Polygons</h2>
 <p>Great. We've got a functional #ratmap now. Let's open the door to more advanced mapping techniques by moving beyond point data. Here's a map with Boston neighborhood polygons underneath our rodents.</p>
 <div id="map5" class="map"></div>
-
+<a class="standalone" href="http://bl.ocks.org/awoodruff/728754e48c11a94b522b" target="_blank">View this example on its own</a>
 <p>These polygons were loaded from another GeoJSON file with minimal effort. By default, Leaflet renders polygon and line data as <a href="https://developer.mozilla.org/en-US/docs/Web/SVG" target="_blank">SVG</a> (Scalable Vector Graphics) paths, making interaction and styling easy. We'll get to that in a moment (that blue doesn't look great!), but first the simple code to load this layer.</p>
 
 <pre><code>
@@ -286,6 +288,7 @@ $.getJSON("rodents.geojson",function(data){
 <h2 id="section8">Thematic styles</h2>
 <p>Okay. Let's do something about that default blue. Let's make these polygons useful by turning them into a choropleth layer. The neighborhoods GeoJSON file contains numbers for the number of rodent incidents per square mile in each neighborhood, calculated in QGIS. So here's a #ratdensitymap.</p>
 <div id="map6" class="map"></div>
+<a class="standalone" href="http://bl.ocks.org/awoodruff/3ce5d735126a56dfff94" target="_blank">View this example on its own</a>
 <pre><code>
 $.getJSON("neighborhoods.geojson",function(hoodData){
   L.geoJson( hoodData<span>, {
@@ -317,6 +320,7 @@ $.getJSON("neighborhoods.geojson",function(hoodData){
 <h2 id="section9">Plug in and thin out</h2>
 <p>The beauty of Leaflet being open source—and of the particular way it's written—is that it's functionality and features can be extended and customized to your heart's content. There's a whole slew of <a href="http://leafletjs.com/plugins.html" target="_blank">plugins</a> people have written to extend the Leaflet core, most of them very easy to drop right into your project. We'll use a popular one, <a href="https://github.com/Leaflet/Leaflet.markercluster" target="_blank">Leaflet.markercluster</a>. A map cluttered with rat symbols isn't great, and this plugin will help make it more readable and usable. Poke around on the map below.</p>
 <div id="map7" class="map"></div>
+<a class="standalone" href="http://bl.ocks.org/awoodruff/5de3553bb1f1b0c5f90d" target="_blank">View this example on its own</a>
 <pre><code>
 &lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/&gt;
 <span>&lt;link rel="stylesheet" href="MarkerCluster.css"/&gt;</span>
