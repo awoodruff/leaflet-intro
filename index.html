@@ -55,7 +55,7 @@
 	<p>So. You want to make a web map. Don't worry; it's easy! This is an introduction to web maps using  Leaflet. It was written by Andy Woodruff and Ryan Mullins for <a href="http://maptimeboston.github.io" target="_blank">Maptime Boston</a>, but you don't need to be with us to follow along. So let's go!</p>
 	<h2 id="section1">What is Leaflet?</h2>
 		<p>
-			<a href="http://leafletjs.com" target="_blank">Leaflet</a> is an open-source JavaScript library for interactive web maps. It's lightweight, simple, and flexible, and is probably the most popular open-source mapping library at the moment. Leaflet is developed by Vladimir Agafonkin (currently of MapBox) and other contributors.
+			<a href="http://leafletjs.com" target="_blank">Leaflet</a> is an open-source JavaScript library for interactive web maps. It's lightweight, simple, and flexible, and is probably the most popular open-source mapping library at the moment. Leaflet is developed by <a href="http://agafonkin.com/en/" target="_blank">Vladimir Agafonkin</a> (currently of MapBox) and other contributors.
 		</p>
 		<p><strong>What Leaflet does:</strong> "Slippy" maps with tiled base layers, panning and zooming, and feature layers that you spupply. It handles various basic tasks like converting data to map layers and mouse interactions, and it's easy to extend with <a href="http://leafletjs.com/plugins.html" target="_blank">plugins</a>. It will also work well across most types of devices. See <a href="http://maptime.github.io/anatomy-of-a-web-map/" target="_blank">Anatomy of a Web Map</a> for an introduction to the most common kinds of web maps, which is what Leaflet is good for.
 		</p>
@@ -98,8 +98,7 @@
   // load a tile layer
   L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
     {
-      attribution: 'Tiles by &lt;a href="http://mapc.org"&gt;MAPC&lt;/a&gt;,
-        Data by &lt;a href="http://mass.gov/mgis"&gt;MassGIS&lt;/a&gt;',
+      attribution: 'Tiles by &lt;a href="http://mapc.org"&gt;MAPC&lt;/a&gt;, Data by &lt;a href="http://mass.gov/mgis"&gt;MassGIS&lt;/a&gt;',
       maxZoom: 17,
       minZoom: 9
     }).addTo(map);
@@ -124,7 +123,7 @@
 	</p>
 	<h2 id="section3">More layers</h2>
 	<div class="map" id="map1"></div>
-	<p>Try other base layers, such as [name some sources here]. Sometimes maps use multiple tile layers at once. The map above adds MAPC's bike lane layer, which looks like vector data but is actually made up of PNG images with transparency.</p>
+	<p>Try other base layers, such as Stamen or OpenStreetMap. Sometimes maps use multiple tile layers at once. The map above adds MAPC's bike lane layer, which looks like vector data but is actually made up of PNG images with transparency.</p>
 	<p>Just pile on additional layers the same way as the first one. As we'll see later, other types of layers are added in a very similar manner. We'll also talk later about how to toggle different layers on and off.</p>
 	<pre>
 		<code>
@@ -182,8 +181,7 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
   // load a tile layer
   L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
     {
-      attribution: 'Tiles by &lt;a href="http://mapc.org"&gt;MAPC&lt;/a&gt;,
-        Data by &lt;a href="http://mass.gov/mgis"&gt;MassGIS&lt;/a&gt;',
+      attribution: 'Tiles by &lt;a href="http://mapc.org"&gt;MAPC&lt;/a&gt;, Data by &lt;a href="http://mass.gov/mgis"&gt;MassGIS&lt;/a&gt;',
       maxZoom: 17,
       minZoom: 9
     }).addTo(map);
@@ -200,7 +198,7 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
 	</code></pre>
 <p>Okay, so what's new here? We've added a couple of files but only a few more lines of code for the #ratmap.
 	<ol>
-		<li>We have two additional files: <a href="http://code.jquery.com/jquery-2.1.1.min.js" target="_blank">jQuery</a>, a super common and super useful JavaScript library, and our <a href="#">rodent GeoJSON</a> file. If you're following along, download both and place them in the same directory as your HTML file.</li>
+		<li>We have two additional files: <a href="http://code.jquery.com/jquery-2.1.1.min.js" target="_blank">jQuery</a>, a super common and super useful JavaScript library, and our <a href="rodents.geojson" target="blank">rodent GeoJSON</a> file. If you're following along, download both and place them in the same directory as your HTML file.</li>
 		<li>Near the top, we've loaded the jQuery script into the document. jQuery makes it easy to manipulate a web page by finding elements on the page, setting their styles and properties, handling interaction events, and more. Learn more at <a href="http://jquery.com/" target="_blank">jquery.com</a>. Right now we're going to use one of its helper methods to load our external GeoJSON file.</li>
 		<li>After adding the base layer (we don't need the extra layer from the previous example), we use jQuery's <a href="http://api.jquery.com/jquery.getjson/" target="_blank"><code>getJSON()</code></a> method to load the rodent file. We pass this method two things: 1) the path to the rodent file, which in this case is just the file name because it's in the same directory, and 2) a function that will run once the file has been loaded and parsed. The <code>data</code> argument in that function represents the JSON data that jQuery reads from our external file.</li>
 		<li>Inside that function, we use <a href="http://leafletjs.com/reference.html#geojson" target="_blank"><code>L.geoJson()</code></a> to create a vector layer from GeoJSON, passing it the same <code>data</code>, and again using <code>addTo()</code> to put the layer on the map.</li>
@@ -233,7 +231,7 @@ $.getJSON("rodents.geojson",function(data){
 	<ol>
 		<li>We have used <a href="http://leafletjs.com/reference.html#icon" target="_blank"><code>L.icon()</code></a> to define the icon we're going to use for the rodent points. We have given it an object with a couple of options. Many options are available, but we just need two for now.
 			<ul>
-				<li><code>iconUrl</code> is the path to the image file, in this case <a href="rat.png" target="_blank">rat.png</a> which sits in the same directory as the HTML page.</li>
+				<li><code>iconUrl</code> is the path to the image file, in this case <a href="rat.png" target="_blank">rat.png</a> (designed by <a href="https://www.iconfinder.com/icons/130276/animal_animals_deratization_disinfestation_experiment_lab_laboratory_mouse_pet_rat_rodent_science_test_icon" target="_blank">Aha-Soft</a>) which sits in the same directory as the HTML page.</li>
 				<li><code>iconSize</code> is a two-number array of the pixel width and height of the icon. Leaflet needs to know the size in order to position the icon properly. This property could be used to scale the images, but here we are just using the actual pixel dimension of the PNG.</li>
 			</ul>
 		</li>
@@ -317,9 +315,17 @@ $.getJSON("neighborhoods.geojson",function(hoodData){
 </ol>
 </p>
 <h2 id="section9">Plug in and thin out</h2>
-<p>The beauty of Leaflet being open source—and of the particular way it's written—is that it's functionality and features can be extended and customized to your heart's content. There's a whole slew of <a href="http://leafletjs.com/plugins.html" target="_blank">plugins</a> people have written to extend the Leaflet core, most of them very easy to drop right into your project. We'll use a popular one, Leaflet.markercluster. A map cluttered with rat symbols isn't great, and this plugin will help make it more readable and usable. Poke around on the map below.</p>
+<p>The beauty of Leaflet being open source—and of the particular way it's written—is that it's functionality and features can be extended and customized to your heart's content. There's a whole slew of <a href="http://leafletjs.com/plugins.html" target="_blank">plugins</a> people have written to extend the Leaflet core, most of them very easy to drop right into your project. We'll use a popular one, <a href="https://github.com/Leaflet/Leaflet.markercluster" target="_blank">Leaflet.markercluster</a>. A map cluttered with rat symbols isn't great, and this plugin will help make it more readable and usable. Poke around on the map below.</p>
 <div id="map7" class="map"></div>
 <pre><code>
+&lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/&gt;
+<span>&lt;link rel="stylesheet" href="MarkerCluster.css"/&gt;</span>
+&lt;script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"&gt;&lt;/script&gt;
+<span>&lt;script src="leaflet.markercluster.js"&gt;&lt;/script&gt;</span>
+&lt;script src="jquery-2.1.1.min.js"&gt;&lt;/script&gt;
+
+...
+
 <span>var rodents = </span>L.geoJson(data,{
   pointToLayer: function(feature,latlng){
     var marker = L.marker(latlng,{icon: ratIcon});
@@ -333,11 +339,24 @@ map.addLayer(clusters);</span>
 </code></pre>
 <p>Look at all that added functionality from just a few lines of code! The plugin takes care of figuring out clusters, displaying them, and breaking them apart as you zoom in. (This is just the simplest implementation; there are <a href="https://github.com/Leaflet/Leaflet.markercluster#all-options" taret="_blank">many options</a> you can explore.)
 	<ol>
-		<li>The first new thing we did was assign that GeoJSON layer to a <code>rodents</code> variable instead of immediately adding it to the map. Its options remain the same, but we need to save it to a variable in order to use it later.</li>
+		<li>The first thing we have to do is add the CSS and JavaScript sources for the Marker Cluster library, available from the <a href="https://github.com/Leaflet/Leaflet.markercluster/tree/master/dist" target="_blank">dist</a> folder of the plugin repository.</li>
+		<li>In the code, we assign that GeoJSON layer to a <code>rodents</code> variable instead of immediately adding it to the map. Its options remain the same, but we need to save it to a variable in order to use it later.</li>
 		<li>Next we create a marker cluster layer with <a href="https://github.com/Leaflet/Leaflet.markercluster#usage" target="_blank"><code>L.markerClusterGroup()</code></a>, a function that is part of the plugin, and assign it to a <code>clusters</code> variable.</li>
 		<li>The cluster layer is a group to which we can add individual markers which will then be clustered. Conveniently, we can also just add the entire rodents layer (which is a collection of markers) at once.</li>
 		<li>Finally, we add the cluster layer to the map, and magically our rodetns are organized into smaller rat armies.</li>
 	</ol>
+</p>
+<h2>Go forth</h2>
+<p>We'll leave it there for now. We've already gone from nothing to a somewhat fancy map, but there is much more you can do with Leaflet. Tinker with what we've done here to better understand how everything works and how different options affect the map. Going forward, have a look at some of these other Leaflet resources:
+	<ul>
+		<li><a href="http://leafletjs.com/examples.html" target="_blank">Tutorials on the main Leaflet site.</a></li>
+		<li><a href="http://leafletjs.com/reference.html" target="_blank">Leaflet API reference</a></li>
+		<li><a href="https://www.mapbox.com/mapbox.js/api/v2.1.0/" target="_blank">Mapbox.js, a library that builds on Leaflet and integrates with Mapbox maps</a></li>
+		<li><a href="https://speakerdeck.com/mourner/future-of-leaflet" target="_blank">The Future of Leaflet</a> (version 1.0 is coming!)</li>
+		<li><a href="http://vimeo.com/106112939" target="_blank">How Simplicity Will Save GIS</a>, a talk by Vladimir Agafonkin at FOSS4G 2014, demonstrating the thinking behind Leaflet</li>
+		<li><a href="https://github.com/RyanMullins/Geog461W.SP2014.Labs" target="_blank">Dynamic Cartography lab assignments</a> from Penn State, covering many techniques and technologies, including Leaflet.</li>
+		<li><a href="https://github.com/mapbox/leaflet-omnivore" target="_blank">leaflet-omnivore</a> is a particularly handy plugin for loading common data formats such as CSV.</li>
+	</ul>
 </p>
 </div>
 <script>
