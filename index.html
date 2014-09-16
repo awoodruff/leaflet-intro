@@ -153,11 +153,11 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
 			<li>Polygons (e.g., neighborhood areas)</li>
 		</ul>
 	</p>
-	<p>This is Maptime Boston, so obviously we're going to make a #ratmap for this example. Below is a map of [rodent incidents? what technically is this?] in Boston.</p>
+	<p>This is Maptime Boston, so obviously we're going to make a #ratmap for this example. Below is a map of reported "rodent activity" in Boston from the Mayor's Hotline.</p>
 
 	<div id="map2" class="map"></div>
 	<a class="standalone" href="http://bl.ocks.org/awoodruff/1dc36a658a2e24e01b12" target="_blank">View this example on its own</a>
-	<p>Rodents everywhere! The data come from the City of Boston's <a href="https://data.cityofboston.gov/City-Services/Rodent-Activity-open-cases-9-4-13/ynt4-n6g9" target="_blank">open data site</a>. We have converted the original CSV to GeoJSON ahead of time using QGIS. GeoJSON is the de facto standard data type for web maps, and Leaflet has built-in methods to make it easy to map GeoJSON data. For more about GeoJSON, see [some good reference].</p>
+	<p>Rodents everywhere! The data come from the City of Boston's <a href="https://data.cityofboston.gov/City-Services/Rodent-Activity-open-cases-9-4-13/ynt4-n6g9" target="_blank">open data site</a>. We have converted the original CSV to GeoJSON ahead of time using QGIS. GeoJSON is the de facto standard data type for web maps, and Leaflet has built-in methods to make it easy to map GeoJSON data. For more about GeoJSON, start with <a href="http://en.wikipedia.org/wiki/GeoJSON" target="_blank">its Wikipedia article</a>.</p>
 
 	<pre><code>
 &lt;html&gt;
@@ -205,7 +205,7 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
 		<li>Inside that function, we use <a href="http://leafletjs.com/reference.html#geojson" target="_blank"><code>L.geoJson()</code></a> to create a vector layer from GeoJSON, passing it the same <code>data</code>, and again using <code>addTo()</code> to put the layer on the map.</li>
 	</ol>
 </p>
-<p>Phew. There were some new pieces to understand here, but the code remains very simple. jQuery is one of several ways to load GeoJSON data. For other options, see [Lyzi Diamond's posts]. We're only going to focus on GeoJSON in this tutorial, but check out Leaflet Omnivore by Tom MacWright for a plugin that makes it easy to load various data types. Need to convert your data to GeoJSON? Check out [need good link here].</p>
+<p>Phew. There were some new pieces to understand here, but the code remains very simple. jQuery is one of several ways to load GeoJSON data. For other options, see <a href="http://lyzidiamond.com/posts/osgeo-august-meeting/" target="_blank">this post</a> and <a href="http://lyzidiamond.com/posts/external-geojson-and-leaflet-the-other-way/" target="_blank">this one</a> from Lyzi Diamond. We're only going to focus on GeoJSON in this tutorial, but check out <a href="https://github.com/mapbox/leaflet-omnivore" target="_blank">Leaflet Omnivore</a> by Tom MacWright for a plugin that makes it easy to load various data types. Need to convert your data to GeoJSON? Try some of these options: <a href="http://www.qgis.org/en/site/" target="_blank">QGIS</a>, <a href="http://ogre.adc4gis.com/" target="_blank">OGRE</a>, <a href="http://shpescape.com/" target="_blank">Shape Escape</a>, <a href="http://www.mapshaper.org/" target="_blank">mapshaper</a>, <a href="http://geojson.io" target="_blank">geojson.io</a>.</p>
 
 <h2 id="section5">Add some style</h2>
 
