@@ -43,7 +43,9 @@
 	</style>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<link rel="stylesheet" href="MarkerCluster.css" />
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script src="leaflet.markercluster.js"></script>
 	<script src="jquery-2.1.1.min.js"></script>
 </head>
 
@@ -70,6 +72,7 @@
 			<li>The Leaflet CSS styles</li>
 			<li>The Leaflet JavaScript library</li>
 			<li>A <code>&lt;div&gt;</code> element to hold the map</li>
+			<li>A <code>height</code> style specified for the map div.</li>
 			<li>A short script to create the map in that <code>&lt;div&gt;</code></li>
 		</ol>
 	</p>
@@ -79,6 +82,9 @@
   &lt;title&gt;A Leaflet map!&lt;/title&gt;
   &lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/&gt;
   &lt;script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"&gt;&lt;/script&gt;
+  &lt;style&gt;
+    #map{ height: 100% }
+  &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -160,6 +166,9 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
   &lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/&gt;
   &lt;script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"&gt;&lt;/script&gt;
   <span>&lt;script src="jquery-2.1.1.min.js"&gt;&lt;/script&gt;</span>
+  &lt;style&gt;
+    #map{ height: 100% }
+  &lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -307,6 +316,29 @@ $.getJSON("neighborhoods.geojson",function(hoodData){
 	<li>Combining <code>style</code> with <code>onEachFeature</code> accomplishes something similar to what <code>pointToLayer</code> did for the rodents. <code>style</code> provides some instructions for how to turn the GeoJSON feature into a map layer, and <code>onEachFeature</code> provides some instructions for what to do with that layer.</li>
 </ol>
 </p>
+<h2 id="section9">Plug in and thin out</h2>
+<p>The beauty of Leaflet being open source—and of the particular way it's written—is that it's functionality and features can be extended and customized to your heart's content. There's a whole slew of <a href="http://leafletjs.com/plugins.html" target="_blank">plugins</a> people have written to extend the Leaflet core, most of them very easy to drop right into your project. We'll use a popular one, Leaflet.markercluster. A map cluttered with rat symbols isn't great, and this plugin will help make it more readable and usable. Poke around on the map below.</p>
+<div id="map7" class="map"></div>
+<pre><code>
+<span>var rodents = </span>L.geoJson(data,{
+  pointToLayer: function(feature,latlng){
+    var marker = L.marker(latlng,{icon: ratIcon});
+    marker.bindPopup(feature.properties.Location + '&lt;br/&gt;' + feature.properties.OPEN_DT);
+    return marker;
+  }
+});
+<span>var clusters = L.markerClusterGroup();
+clusters.addLayer(rodents);
+map.addLayer(clusters);</span>
+</code></pre>
+<p>Look at all that added functionality from just a few lines of code! The plugin takes care of figuring out clusters, displaying them, and breaking them apart as you zoom in. (This is just the simplest implementation; there are <a href="https://github.com/Leaflet/Leaflet.markercluster#all-options" taret="_blank">many options</a> you can explore.)
+	<ol>
+		<li>The first new thing we did was assign that GeoJSON layer to a <code>rodents</code> variable instead of immediately adding it to the map. Its options remain the same, but we need to save it to a variable in order to use it later.</li>
+		<li>Next we create a marker cluster layer with <a href="https://github.com/Leaflet/Leaflet.markercluster#usage" target="_blank"><code>L.markerClusterGroup()</code></a>, a function that is part of the plugin, and assign it to a <code>clusters</code> variable.</li>
+		<li>The cluster layer is a group to which we can add individual markers which will then be clustered. Conveniently, we can also just add the entire rodents layer (which is a collection of markers) at once.</li>
+		<li>Finally, we add the cluster layer to the map, and magically our rodetns are organized into smaller rat armies.</li>
+	</ol>
+</p>
 </div>
 <script>
 
@@ -421,6 +453,44 @@ function initializeMap(id){
 					return marker;
 				}
 			}).addTo(map);
+		});
+		break;
+
+		case "map7":
+		map.setZoom(12);
+		$.getJSON("neighborhoods.geojson",function(hoodData){
+			L.geoJson( hoodData, {
+				style: function(feature){
+					var fillColor,
+						density = feature.properties.density;
+					if ( density > 80 ) fillColor = "#006837";
+					else if ( density > 40 ) fillColor = "#31a354";
+					else if ( density > 20 ) fillColor = "#78c679";
+					else if ( density > 10 ) fillColor = "#c2e699";
+					else if ( density > 0 ) fillColor = "#ffffcc";
+					else fillColor = "#f7f7f7";
+					return { color: "#999", weight: 1, fillColor: fillColor, fillOpacity: .6 };
+				},
+				onEachFeature: function( feature, layer ){
+					layer.bindPopup( "<strong>" + feature.properties.Name + "</strong><br/>" + feature.properties.density + " rats per square mile" )
+				}
+			}).addTo(map);
+		});
+		$.getJSON("rodents.geojson",function(data){
+			var ratIcon = L.icon({
+				iconUrl: 'rat.png',
+				iconSize: [60,50]
+			});
+			var clusters = L.markerClusterGroup();
+			var rodents = L.geoJson(data,{
+				pointToLayer: function(feature,latlng){
+					var marker = L.marker(latlng,{icon: ratIcon});
+					marker.bindPopup(feature.properties.Location + '<br/>' + feature.properties.OPEN_DT);
+					return marker;
+				}
+			});
+			clusters.addLayer(rodents);
+			map.addLayer(clusters);
 		});
 		break;
 	}
