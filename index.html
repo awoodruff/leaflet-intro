@@ -35,9 +35,11 @@
 			overflow: auto;
 		}
 		code{ color: black;}
-		code span{
-			background-color: #f5f2f0;
+
+		code em, code em span, code em .token.operator{
+			font-style: normal;
 			font-weight: bold;
+			background: #d0d0d0;
 		}
 
 	</style>
@@ -147,13 +149,13 @@ L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
   maxZoom: 17,
   minZoom: 9
 }).addTo(map);
-<span>
+ OOO 
 // bike lanes
 L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
 {
   maxZoom: 17,
   minZoom: 9
-}).addTo(map);</span>
+}).addTo(map); CCC 
 		</code>
 	</pre>
 	<h2 id="section4">Easy! Now let's map our own data!</h2>
@@ -176,7 +178,7 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
   &lt;title&gt;A Leaflet map!&lt;/title&gt;
   &lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/&gt;
   &lt;script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"&gt;&lt;/script&gt;
-  <span>&lt;script src="jquery-2.1.1.min.js"&gt;&lt;/script&gt;</span>
+   OOO &lt;script src="jquery-2.1.1.min.js"&gt;&lt;/script&gt; CCC 
   &lt;style&gt;
     #map{ height: 100% }
   &lt;/style&gt;
@@ -197,13 +199,13 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
       maxZoom: 17,
       minZoom: 9
     }).addTo(map);
-<span>
+ OOO 
   // load GeoJSON from an external file
   $.getJSON("rodents.geojson",function(data){
     // add GeoJSON layer to the map once the file is loaded
     L.geoJson(data).addTo(map);
   });
-</span>
+ CCC 
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
@@ -228,15 +230,15 @@ L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
 
 <pre><code class="language-javascript">
 $.getJSON("rodents.geojson",function(data){
-  <span>var ratIcon = L.icon({
+   OOO var ratIcon = L.icon({
     iconUrl: 'rat.png',
     iconSize: [60,50]
-  });</span>
-  L.geoJson(data<span>,{
+  }); CCC 
+  L.geoJson(data OOO ,{
     pointToLayer: function(feature,latlng){
 	  return L.marker(latlng,{icon: ratIcon});
     }
-  }</span>).addTo(map);
+  } CCC ).addTo(map);
 });
 </code></pre>
 <p>Leaflet is flexible and smart. As we saw in the previous example, it will draw maps just fine by default, but here we've specified some options to override a default. There are two main additions:
@@ -261,9 +263,9 @@ $.getJSON("rodents.geojson",function(data){
 <a class="standalone" href="http://bl.ocks.org/awoodruff/2488ee1fdf0cf063904e" target="_blank">View this example on its own</a>
 <pre><code class="language-javascript">
 pointToLayer: function(feature,latlng){
-  <span>var marker = L.marker(latlng,{icon: ratIcon});
+   OOO var marker = L.marker(latlng,{icon: ratIcon});
   marker.bindPopup(feature.properties.Location + '&lt;br/&gt;' + feature.properties.OPEN_DT);
-  return marker;</span>
+  return marker; CCC 
 }
 </code></pre>
 <p>Piece of cake. Before returning the Marker in pointToLayer, we just need to use the <a href="http://leafletjs.com/reference.html#marker-bindpopup" target="_blank"><code>bindPopup()</code></a> method to enable the popup on click. <code>bindPopup()</code> only needs to be given the content that is to appear in the popup. In this case, we pass it an HTML string: the Location and OPEN_DT properties from the GeoJSON feature, and a line break im between. Leaflet handles the interaction and everything else. Like most Leaflet objects, though, we could customize the popup if we wanted to.</p>
@@ -275,9 +277,9 @@ pointToLayer: function(feature,latlng){
 <p>These polygons were loaded from another GeoJSON file with minimal effort. By default, Leaflet renders polygon and line data as <a href="https://developer.mozilla.org/en-US/docs/Web/SVG" target="_blank">SVG</a> (Scalable Vector Graphics) paths, making interaction and styling easy. We'll get to that in a moment (that blue doesn't look great!), but first the simple code to load this layer.</p>
 
 <pre><code class="language-javascript">
-<span>$.getJSON("neighborhoods.geojson",function(hoodData){
+ OOO $.getJSON("neighborhoods.geojson",function(hoodData){
   L.geoJson( hoodData ).addTo(map);
-});</span>
+}); CCC 
 
 $.getJSON("rodents.geojson",function(data){
   var ratIcon = L.icon({
@@ -302,7 +304,7 @@ $.getJSON("rodents.geojson",function(data){
 <a class="standalone" href="http://bl.ocks.org/awoodruff/3ce5d735126a56dfff94" target="_blank">View this example on its own</a>
 <pre><code class="language-javascript">
 $.getJSON("neighborhoods.geojson",function(hoodData){
-  L.geoJson( hoodData<span>, {
+  L.geoJson( hoodData OOO , {
     style: function(feature){
       var fillColor,
           density = feature.properties.density;
@@ -317,7 +319,7 @@ $.getJSON("neighborhoods.geojson",function(hoodData){
     onEachFeature: function( feature, layer ){
       layer.bindPopup( "&lt;strong&gt;" + feature.properties.Name + "&lt;/strong&gt;&lt;br/&gt;" + feature.properties.density + " rats per square mile" )
     }
-  }</span>).addTo(map);
+  } CCC ).addTo(map);
 });
 </code></pre>
 <p>At this point we begin to see the power of combining built-in Leaflet features with our own code and logic. Leaflet provides convenient methods of styling those polygons, but it's up to us to figure out what styles to use. The code above creates a simple data classification and assigns <a href="http://colorbrewer.org" target="_blank">ColorBrewer</a> colors based on feature values.
@@ -334,9 +336,9 @@ $.getJSON("neighborhoods.geojson",function(hoodData){
 <a class="standalone" href="http://bl.ocks.org/awoodruff/5de3553bb1f1b0c5f90d" target="_blank">View this example on its own</a>
 <pre><code class="language-markup">
 &lt;link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/&gt;
-<span>&lt;link rel="stylesheet" href="MarkerCluster.css"/&gt;</span>
+ OOO &lt;link rel="stylesheet" href="MarkerCluster.css"/&gt; CCC 
 &lt;script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"&gt;&lt;/script&gt;
-<span>&lt;script src="leaflet.markercluster.js"&gt;&lt;/script&gt;</span>
+ OOO &lt;script src="leaflet.markercluster.js"&gt;&lt;/script&gt; CCC 
 &lt;script src="jquery-2.1.1.min.js"&gt;&lt;/script&gt;
 
 ...
@@ -345,16 +347,16 @@ $.getJSON("neighborhoods.geojson",function(hoodData){
 
 ...
 
-<span>var rodents = </span>L.geoJson(data,{
+ OOO var rodents =  CCC L.geoJson(data,{
   pointToLayer: function(feature,latlng){
     var marker = L.marker(latlng,{icon: ratIcon});
     marker.bindPopup(feature.properties.Location + '&lt;br/&gt;' + feature.properties.OPEN_DT);
     return marker;
   }
 });
-<span>var clusters = L.markerClusterGroup();
+ OOO var clusters = L.markerClusterGroup();
 clusters.addLayer(rodents);
-map.addLayer(clusters);</span>
+map.addLayer(clusters); CCC 
 
 ...
 
@@ -383,6 +385,16 @@ map.addLayer(clusters);</span>
 </p>
 </div>
 <script>
+
+$(window).load(function(){
+	var h = $("code").each(function(){
+		var h = $(this).html().replace(/ OOO /g, "<em>").replace( / CCC /g, "</em>");
+		$(this).html(h);
+	});
+	
+})
+
+//
 
 var mapDivs = document.getElementsByClassName("map"),
 	maps = [];
