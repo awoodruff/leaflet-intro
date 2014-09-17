@@ -63,6 +63,14 @@
 		</p>
 		<p><strong>What Leaflet does not do:</strong> Provide any data for you! Leaflet is a framework for showing and interacting with map data, but it's up to you to provide that data, including a basemap. Leaflet also doesn't do non-Mercator projections or (at least not natively) extra fancy data manipulation. If you need total freedom of form, interaction, and transitions, consider something like <a href="http://d3js.org" target="_blank">D3</a>. Leaflet is also not GIS, although it can be combined with tools like <a href="http://cartodb.com" target="_blank">CartoDB</a> for GIS-like capabilities.</p>
 		<p><strong>How this tutorial works:</strong> It's structured around examples that progressively build upon one another, starting from scratch and ending with slightly advanced techniques. It assumes a basic knowledge of HTML and JavaScript, or at the very least assumes the will to tinker with the code to better understand what it does—and how to use it for your own work. It won't explain every little object or array, but will contain plenty of links. For complete and thorough documentation, see the <a href="http://leafletjs.com/reference.html" target="_blank">Leaflet site</a>.</p>
+		<p><strong>BEFORE YOU START!</strong>
+			<ol>
+				<li>You'll want a proper text editor. We recommend <a href="http://www.sublimetext.com/" target="_blank">Sublime Text</a>.
+				</li>
+				<li>If you want to follow along on your own computer, your maps will need be on a local web server. Easy ways of doing this include running Python's <a href="http://www.pythonforbeginners.com/modules-in-python/how-to-use-simplehttpserver/" target="_blank">SimpleHTTPServer</a> in your map directory, installing <a href="http://www.mamp.info/en/" target="_blank">MAMP</a> (for Mac), or installing <a href="http://www.wampserver.com/en/" target="_blank">WampServer</a> (for Windows).
+				</li>
+			</ol>
+		</p>
 	<h2 id="section2">This is a simple Leaflet map. A few lines of code.</h2>
 	<div class="map" id="map0"></div>
 	<a class="standalone" href="http://bl.ocks.org/awoodruff/e9739a6719e0604eef58" target="_blank">View this example on its own</a>
@@ -109,12 +117,13 @@
 &lt;/body&gt;
 &lt;/html&gt;
 	</code></pre>
+	<p>Want to follow along? Donwload this <a href="https://gist.githubusercontent.com/awoodruff/e9739a6719e0604eef58/raw/a4609a968a393151b67110d96ba7515ed6ce0505/index.html" target="_blank">starter file</a>.</p>
 	<p>Let's focus on the code in that <code>&lt;script&gt;</code> tag near the end. What did we do?
 		<ol>
 			<li>Created a <code>map</code> variable</li>
 			<li>Used <a href="http://leafletjs.com/reference.html#map-l.map" target="_blank"><code>L.map()</code></a> to initialize the map object, passing it the id of the div where we want the map to go</li>
 			<li>Used the <a href="http://leafletjs.com/reference.html#map-setview" target="_blank"><code>setView()</code></a> method to center the initial map view on Boston (latitude 42.35, longitude -71.08, and zoom level 13)</li>
-			<li>Used <a href="http://leafletjs.com/reference.html#tilelayer" target="_blank"><code>L.tileLayer()</code></a> to create a base layer of map tiles (in this case <a href="http://mapc.org">MAPC's</a> basemap), specifying a URL template for the tile images. {z}/{x}/{y} is a template that Leaflet uses to find tiles at the correct zoom, x, and y coordinates. (See Anatomy of a Web Map). We also specified a few options:
+			<li>Used <a href="http://leafletjs.com/reference.html#tilelayer" target="_blank"><code>L.tileLayer()</code></a> to create a base layer of map tiles (in this case <a href="http://mapc.org">MAPC's</a> basemap), specifying a URL template for the tile images. {z}/{x}/{y} is a template that Leaflet uses to find tiles at the correct zoom, x, and y coordinates. (See <a href="http://maptime.github.io/anatomy-of-a-web-map/#57" target="_blank">Anatomy of a Web Map</a>). We also specified a few options:
 				<ul>
 					<li>Attribution text to appear in the corner. Always property attribute your map data!</li>
 					<li>Maximum and minimum zoom levels. Some tile sets such as this one only cover a certain zoom range. These options prevent the user from zooming beyond that range and seeing a blank map.</li>
@@ -126,7 +135,7 @@
 	<h2 id="section3">More layers</h2>
 	<div class="map" id="map1"></div>
 	<a class="standalone" href="http://bl.ocks.org/awoodruff/f89989cd2499cf4a900c" target="_blank">View this example on its own</a>
-	<p>Try other base layers, such as Stamen or OpenStreetMap. Sometimes maps use multiple tile layers at once. The map above adds MAPC's bike lane layer, which looks like vector data but is actually made up of PNG images with transparency.</p>
+	<p>Try other base layers, such as <a href="http://maps.stamen.com/" target="_blank">Stamen</a> or <a href="http://wiki.openstreetmap.org/wiki/Tiles" target="_blank">OpenStreetMap</a>. Sometimes maps use multiple tile layers at once. The map above adds MAPC's bike lane layer, which looks like vector data but is actually made up of PNG images with transparency.</p>
 	<p>Just pile on additional layers the same way as the first one. As we'll see later, other types of layers are added in a very similar manner. We'll also talk later about how to toggle different layers on and off.</p>
 	<pre>
 		<code class="language-javascript">
